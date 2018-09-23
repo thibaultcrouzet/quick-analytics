@@ -6,10 +6,9 @@
  * @since   1.0.0
  */
  
-if(!defined( 'ABSPATH' )){
+if( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
 
 /**
  * Setup plugin.
@@ -259,7 +258,7 @@ class Quick_Analytics_Admin {
 			}
 		}
 
-		return json_encode($output);
+		return $output;
 
 	}
 
@@ -272,13 +271,12 @@ class Quick_Analytics_Admin {
 
 		
 		$settings = get_option( 'quick_analytics' );
-		$settings = json_decode($settings);
 
 		$position = 'body';
 
-		if ( isset( $settings->position ) ) {
+		if ( isset( $settings['position'] ) ) {
 
-			$position = $settings->position;
+			$position = $settings['position'];
 
 		}
 
@@ -290,129 +288,129 @@ class Quick_Analytics_Admin {
 		
 		$exclude_admin = false;
 
-		if ( isset( $settings->exclude_admin ) ) {
+		if ( isset( $settings['exclude_admin'] ) ) {
 
-			$exclude_admin = $settings->exclude_admin;
+			$exclude_admin = $settings['exclude_admin'];
 
 		}
 				
 		$google_id = '';
 
-		if ( isset( $settings->google_id ) ) {
+		if ( isset( $settings['google_id'] ) ) {
 
-			$google_id = $settings->google_id;
+			$google_id = $settings['google_id'];
 
 		}
 
 		$google_anonymize = false;
 
-		if ( isset( $settings->google_anonymize ) ) {
+		if ( isset( $settings['google_anonymize'] ) ) {
 
-			$google_anonymize = $settings->google_anonymize;
+			$google_anonymize = $settings['google_anonymize'];
 
 		}		
 		
 		$yandex_id = '';
 
-		if ( isset( $settings->yandex_id ) ) {
+		if ( isset( $settings['yandex_id'] ) ) {
 
-			$yandex_id = $settings->yandex_id;
+			$yandex_id = $settings['yandex_id'];
 
 		}
 
 		$yandex_click_map = false;
 
-		if ( isset( $settings->yandex_click_map ) ) {
+		if ( isset( $settings['yandex_click_map'] ) ) {
 
-			$yandex_click_map = $settings->yandex_click_map;
+			$yandex_click_map = $settings['yandex_click_map'];
 
 		}	
 		
 		$yandex_track_links = false;
 
-		if ( isset( $settings->yandex_track_links ) ) {
+		if ( isset( $settings['yandex_track_links'] ) ) {
 
-			$yandex_track_links = $settings->yandex_track_links;
+			$yandex_track_links = $settings['yandex_track_links'];
 
 		}	
 				
 		$yandex_accurate_track_bounce = false;
 
-		if ( isset( $settings->yandex_accurate_track_bounce ) ) {
+		if ( isset( $settings['yandex_accurate_track_bounce'] ) ) {
 
-			$yandex_accurate_track_bounce = $settings->yandex_accurate_track_bounce;
+			$yandex_accurate_track_bounce = $settings['yandex_accurate_track_bounce'];
 
 		}		
 		
 		$yandex_webvisor = false;
 
-		if ( isset( $settings->yandex_webvisor ) ) {
+		if ( isset( $settings['yandex_webvisor'] ) ) {
 
-			$yandex_webvisor = $settings->yandex_webvisor;
+			$yandex_webvisor = $settings['yandex_webvisor'];
 
 		}		
 		
 		$mixpanel_token = '';
 
-		if ( isset( $settings->mixpanel_token ) ) {
+		if ( isset( $settings['mixpanel_token'] ) ) {
 
-			$mixpanel_token = $settings->mixpanel_token;
+			$mixpanel_token = $settings['mixpanel_token'];
 
 		}		
 		
 		$kissmetrics_key = '';
 
-		if ( isset( $settings->kissmetrics_key ) ) {
+		if ( isset( $settings['kissmetrics_key'] ) ) {
 
-			$kissmetrics_key = $settings->kissmetrics_key;
+			$kissmetrics_key = $settings['kissmetrics_key'];
 
 		}			
 
 		$woopra_domain = '';
 
-		if ( isset( $settings->woopra_domain ) ) {
+		if ( isset( $settings['woopra_domain'] ) ) {
 
-			$woopra_domain = $settings->woopra_domain;
+			$woopra_domain = $settings['woopra_domain'];
 
 		}
 		
 		$gauges_site_id = '';
 
-		if ( isset( $settings->gauges_site_id ) ) {
+		if ( isset( $settings['gauges_site_id'] ) ) {
 
-			$gauges_site_id = $settings->gauges_site_id;
+			$gauges_site_id = $settings['gauges_site_id'];
 
 		}
 				
 		$heap_app_id = '';
 
-		if ( isset( $settings->heap_app_id ) ) {
+		if ( isset( $settings['heap_app_id'] ) ) {
 
-			$heap_app_id = $settings->heap_app_id;
+			$heap_app_id = $settings['heap_app_id'];
 
 		}		
 
 		$gosquared_token = '';
 
-		if ( isset( $settings->gosquared_token ) ) {
+		if ( isset( $settings['gosquared_token'] ) ) {
 
-			$gosquared_token = $settings->gosquared_token;
+			$gosquared_token = $settings['gosquared_token'];
 
 		}
 		
 		$statcounter_project = '';
 
-		if ( isset( $settings->statcounter_project ) ) {
+		if ( isset( $settings['statcounter_project'] ) ) {
 
-			$statcounter_project = $settings->statcounter_project;
+			$statcounter_project = $settings['statcounter_project'];
 
 		}
 
 		$statcounter_security = '';
 
-		if ( isset( $settings->statcounter_security ) ) {
+		if ( isset( $settings['statcounter_security'] ) ) {
 
-			$statcounter_security = $settings->statcounter_security;
+			$statcounter_security = $settings['statcounter_security'];
 
 		}		
 	

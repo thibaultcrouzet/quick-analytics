@@ -6,10 +6,9 @@
  * @since   1.0.0
  */
  
-if(!defined( 'ABSPATH' )){
+if( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
 
 /**
  * Setup plugin.
@@ -64,20 +63,19 @@ class Quick_Analytics_Public {
 	 */
 	public function add_scripts() {
 
-		$analytics = get_option( 'quick_analytics' );
-		$settings = json_decode($analytics);
+		$settings = get_option( 'quick_analytics' );
 
-		if ( $analytics && isset( $settings->position ) ) {
+		if ( $settings && isset( $settings['position'] ) ) {
 
-			if ( defined( 'TB_FRAMEWORK_VERSION' ) && 'body' === $settings->position ) {
+			if ( defined( 'TB_FRAMEWORK_VERSION' ) && 'body' === $settings['position'] ) {
 
 				add_action( 'quick_analytics_before', array( $this, 'scripts' ), 2 );
 
-			} elseif ( 'head' === $settings->position ) {
+			} elseif ( 'head' === $settings['position'] ) {
 
 				add_action( 'wp_head', array( $this, 'scripts' ), 2 );
 
-			} elseif ( 'footer' === $settings->position ) {
+			} elseif ( 'footer' === $settings['position'] ) {
 
 				add_action( 'wp_footer', array( $this, 'scripts' ), 1000 );
 
@@ -93,19 +91,18 @@ class Quick_Analytics_Public {
 	public function scripts() {
 
 		$settings = get_option( 'quick_analytics' );
-		$settings = json_decode($settings);
-		
-		if (!current_user_can('edit_theme_options') || (current_user_can('edit_theme_options') && $settings->exclude_admin == false)){
-		
-			//Google
-			if ( ! empty( $settings->google_id ) ) {
 
-				$google_id = esc_attr( $settings->google_id );
+		if (!current_user_can('edit_theme_options') || (current_user_can('edit_theme_options') && $settings['exclude_admin'] == false)){
+
+			//Google
+			if ( ! empty( $settings['google_id'] ) ) {
+
+				$google_id = esc_attr( $settings['google_id'] );
 
 				// Generate ga() JS code.
 				$google_analytics = "analytics('create', '{$google_id}', 'auto');\n";
 
-				if ( ! empty( $settings->google_anonymize ) ) {
+				if ( ! empty( $settings['google_anonymize'] ) ) {
 
 					$google_analytics .= "analytics('set', 'anonymizeIp', true);\n";
 
@@ -113,10 +110,6 @@ class Quick_Analytics_Public {
 
 				$google_analytics .= "analytics('send', 'pageview');\n";
 
-				// Start scripts.
-				echo "<!-- Quick Analytics by Thibault Crouzet -->\n";
-
-	
 ?>
 <!-- Google Analytics -->
 <script>
@@ -124,9 +117,7 @@ class Quick_Analytics_Public {
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','analytics');
-
 <?php echo wp_kses( $google_analytics, array() ); ?>
-
 </script>
 <!-- End Google Analytics -->
 <?php
@@ -134,39 +125,39 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			}
 		
 			//Yandex
-			if ( ! empty( $settings->yandex_id ) ) {
+			if ( ! empty( $settings['yandex_id'] ) ) {
 
-				$yandex_id = esc_attr( $settings->yandex_id );
+				$yandex_id = esc_attr( $settings['yandex_id'] );
 
 				// Generate ga() JS code.
 				$yandex_analytics = "id:{$yandex_id},";
 
-				if ($settings->yandex_click_map) {
+				if ($settings['yandex_click_map']) {
 
 					$yandex_analytics .= "clickmap:true,";
 			
 				}
 
-				if ($settings->yandex_track_links) {
+				if ($settings['yandex_track_links']) {
 
 					$yandex_analytics .= "trackLinks:true,";
 
 				}			
 			
-				if ($settings->yandex_accurate_track_bounce) {
+				if ($settings['yandex_accurate_track_bounce']) {
 
 					$yandex_analytics .= "accurateTrackBounce:true,";
 
 				}	
 			
-				if ($settings->yandex_webvisor) {
+				if ($settings['yandex_webvisor']) {
 
 					$yandex_analytics .= "webvisor:true,";
 
 				}
 					
 ?>
-<!-- Yandex.Metrika counter -->
+<!-- Yandex Metrika -->
 <script type="text/javascript" >
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
@@ -190,33 +181,33 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(document, window, "yandex_metrika_callbacks2");
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/<?php echo $yandex_id; ?>" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+<!-- End Yandex Metrika -->
 <?php
 			}
 		
 			//Mixpanel
-			if ( ! empty( $settings->mixpanel_token ) ) {
+			if ( ! empty( $settings['mixpanel_token'] ) ) {
 
-				$mixpanel_token = esc_attr( $settings->mixpanel_token );
+				$mixpanel_token = esc_attr( $settings['mixpanel_token'] );
 
 ?>
-<!-- start Mixpanel -->
+<!-- Mixpanel -->
 <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
 0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
 for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
 mixpanel.init(<?php echo $mixpanel_token; ?>);</script>
-<!-- end Mixpanel -->
+<!-- End Mixpanel -->
 <?php
 
 			}
 			
 			//Kissmetrics
-			if ( ! empty( $settings->kissmetrics_key ) ) {
+			if ( ! empty( $settings['kissmetrics_key'] ) ) {
 
-				$kissmetrics_key = esc_attr( $settings->kissmetrics_key );
+				$kissmetrics_key = esc_attr( $settings['kissmetrics_key'] );
 
 ?>
-<!-- start Kissmetrics -->
+<!-- Kissmetrics -->
 <script type="text/javascript">var _kmq = _kmq || [];
 var _kmk = _kmk || <?php echo $kissmetrics_key; ?>;
 function _kms(u){
@@ -230,18 +221,18 @@ function _kms(u){
 _kms('//i.kissmetrics.com/i.js');
 _kms('//scripts.kissmetrics.com/' + _kmk + '.2.js');
 </script>
-<!-- end Kissmetrics -->
+<!-- End Kissmetrics -->
 <?php
 
 			}		
 		
 			//Woopra
-			if ( ! empty( $settings->woopra_domain ) ) {
+			if ( ! empty( $settings['woopra_domain'] ) ) {
 
-				$woopra_domain = esc_attr( $settings->woopra_domain );
+				$woopra_domain = esc_attr( $settings['woopra_domain'] );
 
 ?>
-<!-- Start of Woopra Code -->
+<!-- Woopra -->
 <script>
   (function(){
     var t,i,e,n=window,o=document,a=arguments,s="script",r=["config","track","identify","visit","push","call","trackForm","trackClick"],c=function(){var t,i=this;for(i._e=[],t=0;r.length>t;t++)(function(t){i[t]=function(){return i._e.push([t].concat(Array.prototype.slice.call(arguments,0))),i}})(r[t])};for(n._w=n._w||{},t=0;a.length>t;t++)n._w[a[t]]=n[a[t]]=n[a[t]]||new c;i=o.createElement(s),i.async=1,i.src="//static.woopra.com/js/w.js",e=o.getElementsByTagName(s)[0],e.parentNode.insertBefore(i,e)
@@ -252,17 +243,18 @@ _kms('//scripts.kissmetrics.com/' + _kmk + '.2.js');
   });
   woopra.track();
 </script>
-<!-- End of Woopra Code -->
+<!-- End Woopra -->
 <?php
 
 			}		
 
 			//Gauges
-			if ( ! empty( $settings->gauges_site_id ) ) {
+			if ( ! empty( $settings['gauges_site_id'] ) ) {
 
-				$gauges_site_id = esc_attr( $settings->gauges_site_id );
+				$gauges_site_id = esc_attr( $settings['gauges_site_id'] );
 
 ?>		
+<!-- Gauges -->
 <script type="text/javascript">
   var _gauges = _gauges || [];
   (function() {
@@ -277,30 +269,34 @@ _kms('//scripts.kissmetrics.com/' + _kmk + '.2.js');
     s.parentNode.insertBefore(t, s);
   })();
 </script>
+<!-- End Gauges -->
 <?php
 
 			}		
 	
 			//Heap
-			if ( ! empty( $settings->heap_app_id ) ) {
+			if ( ! empty( $settings['heap_app_id'] ) ) {
 
-				$heap_app_id = esc_attr( $settings->heap_app_id );
+				$heap_app_id = esc_attr( $settings['heap_app_id'] );
 
-?>		
+?>	
+<!-- Heap -->	
 <script type="text/javascript">
     window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
     heap.load("<?php echo $heap_app_id; ?>");
 </script>
+<!-- End Heap -->	
 <?php
 
 			}			
 		
 			//GoSquared
-			if ( ! empty( $settings->gosquared_token ) ) {
+			if ( ! empty( $settings['gosquared_token'] ) ) {
 
-				$gosquared_token = esc_attr( $settings->gosquared_token );
+				$gosquared_token = esc_attr( $settings['gosquared_token'] );
 
 ?>		
+<!-- GoSquared -->	
 <script>
   !function(g,s,q,r,d){r=g[r]=g[r]||function(){(r.q=r.q||[]).push(
   arguments)};d=s.createElement(q);q=s.getElementsByTagName(q)[0];
@@ -309,19 +305,20 @@ _kms('//scripts.kissmetrics.com/' + _kmk + '.2.js');
 
   _gs('<?php echo $gosquared_token; ?>');
 </script>
+<!-- End GoSquared -->	
 <?php
 
 			}	
 		
 		
 			//Statcounter
-			if ( ! empty( $settings->statcounter_project ) && ! empty( $settings->statcounter_security ) ) {
+			if ( ! empty( $settings['statcounter_project'] ) && ! empty( $settings['statcounter_security'] ) ) {
 
-				$statcounter_project = esc_attr( $settings->statcounter_project );
-				$statcounter_security = esc_attr( $settings->statcounter_security );
+				$statcounter_project = esc_attr( $settings['statcounter_project'] );
+				$statcounter_security = esc_attr( $settings['statcounter_security'] );
 
 ?>		
-<!-- Default Statcounter Code -->
+<!-- Statcounter -->
 <script type="text/javascript">
 var sc_project=<?php echo $statcounter_project; ?>; 
 var sc_invisible=1; 
@@ -334,7 +331,7 @@ src="https://www.statcounter.com/counter/counter.js" async></script>
 href="http://statcounter.com/" target="_blank"><img class="statcounter"
 src="//c.statcounter.com/<?php echo $statcounter_project; ?>/0/<?php echo $statcounter_security; ?>/1/" alt="Web
 Analytics"></a></div></noscript>
-<!-- End of Statcounter Code -->
+<!-- End Statcounter -->
 <?php
 
 			}			

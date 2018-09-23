@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Quick Analytics\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-23 06:51+0000\n"
-"PO-Revision-Date: 2018-09-23 07:19+0000\n"
+"PO-Revision-Date: 2018-09-23 07:17+0000\n"
 "Last-Translator: thibault <contact@thibaultcrouzet.com>\n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -193,16 +193,16 @@ msgstr "Gauges"
 
 #: includes/admin/templates/options.php:265
 msgid "Site ID"
-msgstr "ID du site"
+msgstr "Site ID"
 
 #: includes/admin/templates/options.php:269
 msgid "Input your Gauges \"Site ID.\""
-msgstr "Ajouter votre \"ID du site\" de Gauges."
+msgstr "Ajouter votre \"Site ID\" de Gauges."
 
 #: includes/admin/templates/options.php:270
 #, php-format
 msgid "Take your Site ID in %s."
-msgstr "Prenez votre ID du site dans %s."
+msgstr "Prenez votre Site ID dans %s."
 
 #: includes/admin/templates/options.php:282
 msgid "Heap"
