@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Quick Analytics
- * Plugin URI: https://thibaultcrouzet.com/
+ * Plugin URI: http://thibaultcrouzet.com/
  * Description: A simple plugin that helps you to integrate quickly your analytics tracking IDs.
  * Version: 1.0.0
  * Author: Thibault Crouzet
- * Author URI: https://thibaultcrouzet.com
+ * Author URI: http://thibaultcrouzet.com
  * Text Domain: quick-analytics
  * Domain Path: /languages/
  *
